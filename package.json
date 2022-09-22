@@ -3,6 +3,11 @@
   "private": true,
   "version": "0.1.0",
   "dependencies": {
+    "@tiptap/extension-focus": "^2.0.0-beta.196",
+    "@tiptap/extension-image": "^2.0.0-beta.196",
+    "@tiptap/extension-link": "^2.0.0-beta.196",
+    "@tiptap/extension-placeholder": "^2.0.0-beta.196",
+    "@tiptap/extension-typography": "^2.0.0-beta.196",
     "@tiptap/react": "^2.0.0-beta.195",
     "@tiptap/starter-kit": "^2.0.0-beta.195",
     "@types/node": "^16.11.59",

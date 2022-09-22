@@ -1,0 +1,119 @@
+.ProseMirror {
+  padding: 4em 30vw;
+  font-size: 1rem;
+}
+
+.ProseMirror * {
+  transition: background 0.3s ease;
+}
+
+@media screen and (max-width: 1200px) {
+  .ProseMirror {
+    padding: 25px 5vw;
+  }
+}
+
+.ProseMirror:focus {
+  outline: none;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6, thead {
+  color: var(--dark);
+  font-weight: revert;
+  margin: 2rem 0 0;
+  padding: 2rem auto 1rem;
+}
+
+p, ul, text, a, tr, td, ol, ul {
+  color: var(--gray);
+  fill: var(--gray);
+  font-weight: revert;
+  margin: 0.8rem 0;
+  padding: revert;
+  line-height: 1.6rem;
+}
+
+ol, ul {
+  padding-left: 1.5em;
+}
+
+ol p, ul p {
+  margin: 0.2rem 0;
+}
+
+table {
+  border: 1px solid var(--outlinegray);
+  width: 100%;
+  padding: 1.5em;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 0.2em 1em;
+  border: 1px solid var(--outlinegray);
+}
+
+img {
+  max-width: 100%;
+  border-radius: 3px;
+  margin: 1em 0;
+}
+
+sup {
+  line-height: 0
+}
+
+blockquote {
+  margin-left: 0em;
+  border-left: 3px solid var(--secondary);
+  padding-left: 1em;
+  transition: border-color 0.2s ease;
+}
+
+a {
+  font-size: 1em;
+  color: var(--secondary);
+  transition: color 0.3s ease !important;
+}
+
+a:hover {
+  color: var(--tertiary);
+}
+
+pre {
+  padding: 0.75em;
+  border-radius: 3px;
+}
+
+code {
+  font-size: 0.85em;
+  padding: 0.15em 0.3em;
+  border-radius: 5px;
+  background: var(--outlinegray);
+}
+
+pre.highlight {
+  background: var(--dark) !important;
+}
+
+pre.highlight > code {
+  color: #eee;
+  padding: 0;
+  background: none !important;
+}
+
+.has-focus {
+  border-radius: 5px;
+  background: var(--lightgray);
+}
+
+hr {
+  width: 100%;
+  margin: 2em 0;
+  height: 2px;
+  border-radius: 1px;
+  border-width: 0;
+  color: var(--outlinegray);
+  background-color: var(--outlinegray);
+}
