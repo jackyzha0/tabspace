@@ -10,6 +10,7 @@ import Typography from '@tiptap/extension-typography';
 import Image from '@tiptap/extension-image';
 
 const PLACEHOLDER_TEXT = `Welcome to your TabSpace!
+
 Treat this as your own little scratchspace in the comfort of your new tab page.
 Markdown-like syntax is supported and notes are saved in real-time.
 

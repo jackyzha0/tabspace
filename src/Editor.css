@@ -1,5 +1,5 @@
 .ProseMirror {
-  padding: 4em 30vw;
+  padding: 2em 30vw;
   font-size: 1rem;
 }
 
@@ -7,9 +7,17 @@
   transition: background 0.3s ease;
 }
 
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: var(--outlinegray);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
 @media screen and (max-width: 1200px) {
   .ProseMirror {
-    padding: 25px 5vw;
+    padding: 2em 5vw;
   }
 }
 
@@ -36,6 +44,7 @@ p, ul, text, a, tr, td, ol, ul {
 
 ol, ul {
   padding-left: 1.5em;
+  margin: 0;
 }
 
 ol p, ul p {

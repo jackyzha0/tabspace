@@ -6,7 +6,7 @@
   --visited: #afbfc9;
   --gray: #4e4e4e;
   --lightgray: #f0f0f0;
-  --outlinegray: #dadada;
+  --outlinegray: #cacaca;
 }
 
 [saved-theme="dark"] {
@@ -17,7 +17,7 @@
   --tertiary: #84a59d !important;
   --gray: #d4d4d4 !important;
   --lightgray: #292633 !important;
-  --outlinegray: #343434 !important;
+  --outlinegray: #444444 !important;
 }
 
 body {
