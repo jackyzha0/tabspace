@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { DragEvent, useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { load, save } from './storage';
@@ -45,7 +45,6 @@ const Editor = () => {
     onUpdate: ({ editor }) => save(editor.getJSON())
   });
 
-
   useEffect(() => {
     const updateClosure = (event: StorageEvent) => {
       if (event.storageArea !== localStorage) return;
@@ -59,12 +58,29 @@ const Editor = () => {
     return () => window.removeEventListener('storage', updateClosure);
   }, [editor]);
 
+  const handleDrop = (evt: DragEvent) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    const fileList = evt.dataTransfer.files;
+    if (fileList.length >= 1) {
+      const file = fileList[0];
+      const reader = new FileReader();
+      reader.addEventListener('load', (evt) => {
+        if (evt.target && editor) {
+          const uploaded_image = "" + evt.target.result;
+          editor.chain().focus().setImage({ src: uploaded_image }).run()
+        }
+      });
+      reader.readAsDataURL(file);
+    }
+  }
+
   if (!editor) {
     return null
   }
 
   return (
-    <EditorContent editor={editor} />
+    <EditorContent onDrop={handleDrop} editor={editor} />
   )
 }
 
