@@ -103,6 +103,11 @@ code {
   background: var(--outlinegray);
 }
 
+span[data-time] {
+  padding: 0.15em 0.3em;
+  border-radius: 5px;
+}
+
 pre.highlight {
   background: var(--dark) !important;
 }

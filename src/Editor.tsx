@@ -8,11 +8,14 @@ import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
 import Typography from '@tiptap/extension-typography';
 import Image from '@tiptap/extension-image';
+import { TimedTask } from './tasks/TimedTask';
 
 const PLACEHOLDER_TEXT = `Welcome to your TabSpace!
 
 Treat this as your own little scratchspace in the comfort of your new tab page.
-Markdown-like syntax is supported and notes are saved in real-time.
+
+- Markdown-like syntax is supported and notes are saved in real-time.
+- To create a new to-do task, write (due <deadline>) in a block.
 
 This is your new digital home, set it up however you'd like!
 `
@@ -41,6 +44,7 @@ const Editor = () => {
       }),
       Typography,
       Image,
+      TimedTask,
     ],
     content: load(),
     onUpdate: ({ editor }) => save(editor.getJSON())
