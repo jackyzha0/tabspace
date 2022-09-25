@@ -11,13 +11,18 @@
     "@tiptap/extension-typography": "^2.0.0-beta.196",
     "@tiptap/react": "^2.0.0-beta.195",
     "@tiptap/starter-kit": "^2.0.0-beta.195",
+    "@types/d3-force": "^3.0.3",
     "@types/node": "^16.11.59",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
     "chrono-node": "^2.4.1",
+    "d3-force": "^3.0.0",
+    "nanoid": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-force-graph-2d": "^1.23.11",
     "react-scripts": "^2.1.3",
+    "react-sizeme": "^3.0.2",
     "typescript": "^4.8.3"
   },
   "scripts": {

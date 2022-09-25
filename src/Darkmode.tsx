@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './Darkmode.css'
 
-function loadDefault() {
+export function loadDefault() {
   const userPref = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
   const currentTheme = localStorage.getItem('theme') || userPref;
   document.documentElement.setAttribute('saved-theme', currentTheme);
   return currentTheme;
 }
 
-function Darkmode() {
-  const [theme, setTheme] = useState(loadDefault());
+interface IDarkmode {
+  theme: string,
+  setTheme: (newTheme: string) => void,
+}
+
+function Darkmode({ theme, setTheme }: IDarkmode) {
   const setDocumentTheme = (theme: string) => {
     setTheme(theme);
     localStorage.setItem('theme', theme);

@@ -110,6 +110,11 @@ span[data-time] {
   white-space: nowrap;
 }
 
+span[data-time].highlight {
+  background: #ff3333bb !important;  
+  transition: background 0.3s ease;
+}
+
 span[data-time]::after {
   visibility: hidden;
   opacity: 0;
@@ -117,7 +122,7 @@ span[data-time]::after {
   position: absolute;
   bottom: 100%;
   left: 0;
-  background: var(--light);
+  background: var(--lightgray);
   padding: 0.15em 0.3em;
   border-radius: 5px;
   white-space: nowrap;

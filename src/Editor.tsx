@@ -1,4 +1,4 @@
-import React, { DragEvent, useEffect, useState } from 'react';
+import React, { DragEvent, useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react'
 import { Editor as TiptapEditor } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
@@ -22,27 +22,33 @@ This is your new digital home, set it up however you'd like!
 `
 
 export interface Tasks {
-  text: string,
   due: number, // JS date in milliseconds past epoch
-  anchor: number,
+  uid: string,
 }
 
 interface IEditor {
-  setTasks: (tasks: Tasks[]) => void, 
+  setTasks: (cb: ((tasks: Tasks[]) => Tasks[])) => void,
 }
 
-const Editor = ({setTasks}: IEditor) => {
+const Editor = ({ setTasks }: IEditor) => {
   const refreshTasks = (editor: TiptapEditor) => {
-    const tasks: Tasks[] = []
-    editor.state.doc.descendants((node, pos) => {
+    const newTasks: Tasks[] = []
+    editor.state.doc.descendants((node) => {
       if (node.type.name === 'text') {
         const timeMark = node.marks.find((mark) => mark.type.name === 'timedTask');
         if (timeMark !== undefined) {
-          tasks.push({ text: node.text || "", due: timeMark.attrs.time, anchor: pos })
+          newTasks.push({ due: timeMark.attrs.time, uid: timeMark.attrs.uid })
         }
       }
     });
-    setTasks(tasks);
+
+    setTasks((oldTasks: Tasks[]) => {
+      if (JSON.stringify(oldTasks) !== JSON.stringify(newTasks)) {
+        return newTasks;
+      } else {
+        return oldTasks;
+      }
+    })
   }
 
   const editor = useEditor({
@@ -84,6 +90,7 @@ const Editor = ({setTasks}: IEditor) => {
       if (event.key === 'blocks' && event.newValue !== null) {
         if (editor) {
           editor.commands.setContent(JSON.parse(event.newValue));
+          refreshTasks(editor);
         }
       }
     };
@@ -117,4 +124,4 @@ const Editor = ({setTasks}: IEditor) => {
   )
 }
 
-export default Editor
+export default Editor;
