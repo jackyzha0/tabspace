@@ -1,4 +1,4 @@
-import React, { DragEvent, useEffect } from 'react';
+import React, { DragEvent, useEffect, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { load, save } from './storage';
@@ -19,6 +19,11 @@ Treat this as your own little scratchspace in the comfort of your new tab page.
 
 This is your new digital home, set it up however you'd like!
 `
+
+interface Tasks {
+  due: number, // JS date in milliseconds past epoch
+  anchor: number,
+}
 
 const Editor = () => {
   const editor = useEditor({
@@ -47,7 +52,18 @@ const Editor = () => {
       TimedTask,
     ],
     content: load(),
-    onUpdate: ({ editor }) => save(editor.getJSON())
+    onUpdate: ({ editor }) => {
+      editor.state.doc.descendants((node, pos) => {
+        if (node.type.name === 'text') {
+          const timeMark = node.marks.find((mark) => mark.type.name === 'timedTask');
+          if (timeMark !== undefined) {
+            console.log(node.text, timeMark.attrs.time, pos)
+          }
+        }
+      });
+
+      save(editor.getJSON())
+    }
   });
 
   useEffect(() => {

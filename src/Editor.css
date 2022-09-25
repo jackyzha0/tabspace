@@ -106,6 +106,28 @@ code {
 span[data-time] {
   padding: 0.15em 0.3em;
   border-radius: 5px;
+  position: relative;
+  white-space: nowrap;
+}
+
+span[data-time]::after {
+  visibility: hidden;
+  opacity: 0;
+  content: attr(locale-string);
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  background: var(--light);
+  padding: 0.15em 0.3em;
+  border-radius: 5px;
+  white-space: nowrap;
+  overflow-x: visible;
+  transition: opacity 0.3s ease;
+}
+
+span[data-time]:hover::after {
+  opacity: 1;
+  visibility: visible;
 }
 
 pre.highlight {

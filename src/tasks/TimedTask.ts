@@ -16,10 +16,10 @@ function calculateUrgency(deadline: Date) {
   const diff = deadline.getTime() - new Date().getTime();
   if (diff < 0) {
     return OVERDUE;
-  } else if (diff < day) {
+  } else if (diff <= day) {
 
     return DUE_TODAY;
-  } else if (diff < day * 3) {
+  } else if (diff <= day * 3) {
     return DUE_SOON;
   } else {
     return NOT_URGENT;
@@ -51,99 +51,105 @@ export const TimedTask = Mark.create({
         parseHTML: element => element.getAttribute('data-time') || new Date().getTime(),
         renderHTML: attributes => ({
           'data-time': attributes.time,
-        })
+          'locale-string': new Date(attributes.time).toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+          }),
+      })
       },
-      color: {
+color: {
         default: NOT_URGENT,
-        renderHTML: attributes => ({
-          style: `background: ${attributes.color}`
-        })
-      }
+    renderHTML: attributes => ({
+      style: `background: ${attributes.color}`
+    })
+}
     }
   },
 
-  onCreate() {
-    const transaction = this.editor.state.tr;
-    this.editor.state.doc.descendants((node, pos) => {
-      if (node.type.name === 'text') {
-        const timeMark = node.marks.find((mark) => mark.type.name === this.name);
-        if (timeMark !== undefined) {
-          const start = pos;
-          const end = pos + node.nodeSize;
-          transaction.removeMark(start, end, timeMark);
+onCreate() {
+  const transaction = this.editor.state.tr;
+  this.editor.state.doc.descendants((node, pos) => {
+    if (node.type.name === 'text') {
+      const timeMark = node.marks.find((mark) => mark.type.name === this.name);
+      if (timeMark !== undefined) {
+        const start = pos;
+        const end = pos + node.nodeSize;
+        transaction.removeMark(start, end, timeMark);
+        const newMark = this.type.create({
+          color: calculateUrgency(new Date(timeMark.attrs.time)),
+          time: timeMark.attrs.time,
+        })
+        transaction.addMark(start, end, newMark);
+      }
+    }
+  });
+
+  transaction.setMeta('addToHistory', false);
+  transaction.setMeta('preventUpdate', true);
+  this.editor.view.dispatch(transaction);
+},
+
+onUpdate() {
+  const transaction = this.editor.state.tr;
+  this.editor.state.doc.descendants((node, pos) => {
+    if (node.type.name === 'text') {
+      const timeMark = node.marks.find((mark) => mark.type.name === this.name);
+      if (timeMark !== undefined) {
+        const start = pos;
+        const end = pos + node.nodeSize;
+        const newTime = parseTime(node.text);
+        if (newTime) {
           const newMark = this.type.create({
-            color: calculateUrgency(new Date(timeMark.attrs.time)),
-            time: timeMark.attrs.time,
+            ...newTime,
+            color: calculateUrgency(new Date(newTime.time))
           })
+          transaction.removeMark(start, end, timeMark);
           transaction.addMark(start, end, newMark);
         }
       }
-    });
+    }
+  });
 
-    transaction.setMeta('addToHistory', false);
-    transaction.setMeta('preventUpdate', true);
-    this.editor.view.dispatch(transaction);
-  },
+  transaction.setMeta('addToHistory', false);
+  transaction.setMeta('preventUpdate', true);
+  this.editor.view.dispatch(transaction);
+},
 
-  onUpdate() {
-    const transaction = this.editor.state.tr;
-    this.editor.state.doc.descendants((node, pos) => {
-      if (node.type.name === 'text') {
-        const timeMark = node.marks.find((mark) => mark.type.name === this.name);
-        if (timeMark !== undefined) {
-          const start = pos;
-          const end = pos + node.nodeSize;
-          const newTime = parseTime(node.text);
-          if (newTime) {
-            const newMark = this.type.create({
-              ...newTime,
-              color: calculateUrgency(new Date(newTime.time))
-            })
-            transaction.removeMark(start, end, timeMark);
-            transaction.addMark(start, end, newMark);
-          }
-        }
-      }
-    });
+parseHTML() {
+  return [
+    {
+      tag: 'span[data-time]',
+    },
+  ]
+},
 
-    transaction.setMeta('addToHistory', false);
-    transaction.setMeta('preventUpdate', true);
-    this.editor.view.dispatch(transaction);
-  },
+addInputRules() {
+  return [
+    markInputRule({
+      find: /(?:\s\()(due\s.+)(?:\))/,
+      type: this.type,
+      getAttributes
+    }),
+  ]
+},
 
-  parseHTML() {
-    return [
-      {
-        tag: 'span[data-time]',
-      },
-    ]
-  },
+addPasteRules() {
+  return [
+    markPasteRule({
+      find: /(?:\s\()(due\s.+)(?:\))/g,
+      type: this.type,
+      getAttributes
+    }),
+  ]
+},
 
-  addInputRules() {
-    return [
-      markInputRule({
-        find: /(?:\s\()(due\s.+)(?:\))/,
-        type: this.type,
-        getAttributes
-      }),
-    ]
-  },
-
-  addPasteRules() {
-    return [
-      markPasteRule({
-        find: /(?:\s\()(due\s.+)(?:\))/g,
-        type: this.type,
-        getAttributes
-      }),
-    ]
-  },
-
-  renderHTML({ HTMLAttributes }) {
-    return [
-      'span',
-      HTMLAttributes,
-      0,
-    ]
-  },
+renderHTML({ HTMLAttributes }) {
+  return [
+    'span',
+    HTMLAttributes,
+    0,
+  ]
+},
 })
