@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Darkmode from './Darkmode';
-import Editor from './Editor';
+import Editor, { Tasks } from './Editor';
 
 function App() {
+  const [tasks, setTasks] = useState<Tasks[]>([]);
+  console.log(tasks)
   return (
     <div className="App">
       <Darkmode />
-      <Editor />
+      <Editor setTasks={setTasks} />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { DragEvent, useEffect, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react'
+import { Editor as TiptapEditor } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
 import { load, save } from './storage';
 import './Editor.css';
@@ -20,12 +21,30 @@ Treat this as your own little scratchspace in the comfort of your new tab page.
 This is your new digital home, set it up however you'd like!
 `
 
-interface Tasks {
+export interface Tasks {
+  text: string,
   due: number, // JS date in milliseconds past epoch
   anchor: number,
 }
 
-const Editor = () => {
+interface IEditor {
+  setTasks: (tasks: Tasks[]) => void, 
+}
+
+const Editor = ({setTasks}: IEditor) => {
+  const refreshTasks = (editor: TiptapEditor) => {
+    const tasks: Tasks[] = []
+    editor.state.doc.descendants((node, pos) => {
+      if (node.type.name === 'text') {
+        const timeMark = node.marks.find((mark) => mark.type.name === 'timedTask');
+        if (timeMark !== undefined) {
+          tasks.push({ text: node.text || "", due: timeMark.attrs.time, anchor: pos })
+        }
+      }
+    });
+    setTasks(tasks);
+  }
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -52,16 +71,9 @@ const Editor = () => {
       TimedTask,
     ],
     content: load(),
+    onCreate: ({ editor }) => refreshTasks(editor),
     onUpdate: ({ editor }) => {
-      editor.state.doc.descendants((node, pos) => {
-        if (node.type.name === 'text') {
-          const timeMark = node.marks.find((mark) => mark.type.name === 'timedTask');
-          if (timeMark !== undefined) {
-            console.log(node.text, timeMark.attrs.time, pos)
-          }
-        }
-      });
-
+      refreshTasks(editor);
       save(editor.getJSON())
     }
   });
