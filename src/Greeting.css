@@ -1,0 +1,17 @@
+.overlay {
+  position: absolute;
+  color: var(--dark);
+  width: 280px;
+  text-align: center;
+  font-size: 1rem;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.9;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+
+

@@ -1,0 +1,7 @@
+.visualization {
+  position: relative;
+}
+
+.visualization:hover > .overlay {
+  opacity: 0.1;
+} 

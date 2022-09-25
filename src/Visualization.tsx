@@ -4,6 +4,8 @@ import ForceGraph2D, { ForceGraphMethods } from 'react-force-graph-2d';
 import { Tasks } from './Editor';
 import { MS_IN_DAYS } from './tasks/TimedTask';
 import { withSize } from 'react-sizeme';
+import Greeting from './Greeting';
+import './Visualization.css'
 
 interface IVisualization {
   tasks: Tasks[],
@@ -14,9 +16,17 @@ interface IVisualization {
   }
 }
 
+function daysDiff(date: number) {
+  return Math.max(0, date - (new Date().getTime())) / MS_IN_DAYS
+}
+
 function dateToSize(date: number) {
-  const daysDiff = Math.max(0, date - (new Date().getTime())) / MS_IN_DAYS
-  return 29 * Math.pow(1.5, -daysDiff) + 1
+  return 29 * Math.pow(1.5, -daysDiff(date)) + 1
+}
+
+function isDueSoon(task: Tasks) {
+  return daysDiff(task.due) < 3
+
 }
 
 function Visualization(props: IVisualization) {
@@ -45,24 +55,27 @@ function Visualization(props: IVisualization) {
     ctx.fill();
   }, [props.theme])
 
-  return <ForceGraph2D
-    ref={fgRef}
-    height={400}
-    width={props.size.width}
-    nodeLabel=""
-    onNodeClick={(node) => {
-      const nodeEl = document.getElementById((node.id || "").toString());
-      if (nodeEl) {
-        nodeEl.classList.add("highlight");
-        nodeEl.scrollIntoView();
-        setTimeout(() => nodeEl.classList.remove("highlight"), 800);
-      }
-    }}
-    enablePanInteraction={false}
-    enableZoomInteraction={false}
-    nodeCanvasObject={paint}
-    graphData={{ nodes, links: [] }}
-  />
+  return <div className="visualization">
+    <Greeting numTasks={props.tasks.length} numUrgentTasks={props.tasks.filter(isDueSoon).length} />
+    <ForceGraph2D
+      ref={fgRef}
+      height={450}
+      width={props.size.width}
+      nodeLabel=""
+      onNodeClick={(node) => {
+        const nodeEl = document.getElementById((node.id || "").toString());
+        if (nodeEl) {
+          nodeEl.classList.add("highlight");
+          nodeEl.scrollIntoView();
+          setTimeout(() => nodeEl.classList.remove("highlight"), 800);
+        }
+      }}
+      enablePanInteraction={false}
+      enableZoomInteraction={false}
+      nodeCanvasObject={paint}
+      graphData={{ nodes, links: [] }}
+    />
+  </div>
 }
 
 export default withSize()(Visualization);
