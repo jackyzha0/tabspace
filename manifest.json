@@ -1,0 +1,14 @@
+{
+  "name": "TabSpace",
+  "description": "A scratch space for your new tab page",
+  "version": "1.0",
+  "manifest_version": 3,
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "icons": {
+    "16": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png"
+  }
+}
