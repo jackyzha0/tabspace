@@ -20,7 +20,7 @@ const DEFAULT_SAVE: OutputData = {
       content: [{ type: "text", "text": "Getting Started" }]
     }, {
       type: "bulletList",
-      content: [{ type: "listItem", content: [{ type: "paragraph", content: [{ type: "text", "text": "Not sure what you can do? Check out the " }, { type: "text", "marks": [{ type: "bold" }], "text": "help guide" }, { type: "text", "text": " by clicking on the question mark icon in the bottom right corner." }] }] }]
+      content: [{ type: "listItem", content: [{ type: "paragraph", content: [{ type: "text", "text": "Not sure what you can do? Check out the " }, { type: "text", "marks": [{ type: "bold" }], "text": "help guide" }, { type: "text", "text": " by clicking on the information icon in the bottom right corner." }] }] }]
     }, {
       type: "bulletList",
       content: [{ type: "listItem", content: [{ type: "paragraph", content: [{ type: "text", "text": "Delete this start text and make this page your own! " }, { type: "text", "marks": [{ type: "timedTask", "attrs": { "time": 1664254800000, "uid": "RiDD0iLlc7SUnkfMWPe_W", "color": "#ffa33355" } }], "text": "due tonight" }] }] }]
