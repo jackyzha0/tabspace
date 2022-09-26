@@ -19,7 +19,7 @@ rich text formatting and natural language due dates.
 ## Usage
 To set tabspace as your new tab page, depending on your browser can either set up the project as a
 browser extension that replaces the new tab page or configure your new tab page
-URL to point to the official tabspace website: https://tabspace.jzhao.xyz
+URL to point to the official tabspace website: https://tabspace.jzhao.xyz/index.html
 
 ### Building the browser extension locally
 1. Clone the repository
