@@ -1,6 +1,13 @@
 # Tab␣
 ### A scratchspace for your new Tab
 
+A beautiful new tab replacement that gives you your very own 
+scratch space to help you stay organized and focused.
+
+It features a prominent spatial visualization for all of your 
+tasks that helps you prioritize what's important, auto-saving notes, 
+rich text formatting and natural language due dates.
+
 ![demo](./demo.gif)
 
 ## Features

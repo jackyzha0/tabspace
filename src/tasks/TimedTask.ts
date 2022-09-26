@@ -62,7 +62,6 @@ export const TimedTask = Mark.create({
       },
       uid: {
         default: null,
-        parseHTML: element => element.id,
         renderHTML: attributes => ({
           id: attributes.uid
         })
