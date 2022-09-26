@@ -1,5 +1,5 @@
-import React, { ReactElement, useEffect } from 'react';
-import { Link, useLocation } from 'wouter';
+import React, { ReactElement } from 'react';
+import { Link } from 'wouter';
 import './Help.css'
 import exampleImg from './example-img.png'
 
@@ -143,7 +143,7 @@ const DOCS: HelpSection[] = [
 
 function Help() {
   return (<div className="help">
-    <Link href="/index.html"><h2>← Back</h2></Link>
+    <Link href="/index.html"><h2 className="back">← Back</h2></Link>
     <p>Below is a list of all the notable supported keyboard shortcuts.</p>
     {DOCS.map(section => (<div className="section">
       <hr />

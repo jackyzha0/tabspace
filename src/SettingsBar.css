@@ -1,6 +1,9 @@
 .settings-item {
   margin: 2em 2em 2em 0;
   min-width: 30px;
+}
+
+.settings-item, .settings-item * {
   cursor: pointer;
 }
 

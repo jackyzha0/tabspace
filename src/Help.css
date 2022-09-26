@@ -2,6 +2,10 @@
   padding: 4em 0;
 }
 
+.help > .back {
+  cursor: pointer;
+}
+
 .item-container {
   display: inline-flex;
   flex-wrap: wrap;
