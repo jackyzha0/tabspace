@@ -21,7 +21,7 @@
 .helpbutton svg {
   fill: var(--gray);
   width: 24px;
-  height: 24px;
+  height: 30px;
 }
 
 .darkmode > .toggle {
@@ -34,7 +34,7 @@
   position: absolute;
   width: 20px;
   height: 20px;
-  top: calc(50% - 10px);
+  top: calc(50% - 11px);
   margin: 0 7px;
   fill: var(--gray);
   transition: opacity 0.1s ease;
