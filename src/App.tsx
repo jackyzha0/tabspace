@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch, useLocation } from 'wouter';
 import './App.css';
 import SettingsBar, { loadDefault } from './SettingsBar';
@@ -10,7 +10,11 @@ function App() {
   const [location] = useLocation();
   const [tasks, setTasks] = useState<Tasks[]>([]);
   const [theme, setTheme] = useState(loadDefault());
-  console.log(location);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
   return (
     <div className="App">
       <SettingsBar theme={theme} setTheme={setTheme} />

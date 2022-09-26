@@ -1,5 +1,6 @@
 .visualization {
   position: relative;
+  min-height: 450px;
 }
 
 .visualization:hover > .overlay {

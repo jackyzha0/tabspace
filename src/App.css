@@ -22,12 +22,8 @@ h1, h2, h3, h4, h5, h6, thead {
   padding: 2rem auto 1rem;
 }
 
-h2 {
+h2, h3 {
   margin: 1.5rem 0 0;
-}
-
-h3 {
-  margin: 1rem 0 0;
 }
 
 p, ul, text, a, tr, td, ol, ul {

@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
-import { Link } from 'wouter';
+import React, { ReactElement, useEffect } from 'react';
+import { Link, useLocation } from 'wouter';
 import './Help.css'
 import exampleImg from './example-img.png'
 
