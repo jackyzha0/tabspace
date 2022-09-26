@@ -84,6 +84,11 @@ const Editor = ({ setTasks }: IEditor) => {
     }
   });
 
+  // @ts-ignore
+  window['tabspace'] = {
+    dump: () => editor ? editor.getJSON() : null
+  };
+
   useEffect(() => {
     const updateClosure = (event: StorageEvent) => {
       if (event.storageArea !== localStorage) return;
