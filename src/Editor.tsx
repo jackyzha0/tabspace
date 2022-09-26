@@ -9,13 +9,14 @@ import Link from '@tiptap/extension-link';
 import Typography from '@tiptap/extension-typography';
 import Image from '@tiptap/extension-image';
 import { TimedTask } from './tasks/TimedTask';
+import Placeholder from '@tiptap/extension-placeholder';
 
 export interface Tasks {
   due: number, // JS date in milliseconds past epoch
   uid: string,
 }
 
-interface IEditor {
+export interface IEditor {
   setTasks: (cb: ((tasks: Tasks[]) => Tasks[])) => void,
 }
 
@@ -57,6 +58,9 @@ const Editor = ({ setTasks }: IEditor) => {
       }),
       Link.configure({
         protocols: ['mailto'],
+      }),
+      Placeholder.configure({
+        placeholder: "What's on your mind?",
       }),
       Typography,
       Image,

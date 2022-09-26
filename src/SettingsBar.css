@@ -1,11 +1,27 @@
-.darkmode {
-  padding: 2em;
-  margin: 1em 0;
+.settings-item {
+  margin: 2em 2em 2em 0;
   min-width: 30px;
-  position: absolute;
+  cursor: pointer;
+}
+
+.settings-bar {
+  display: flex;
   right: 0;
-  top: 0;
+  bottom: 0;
+  position: absolute;
   z-index: 1;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.settings-bar:hover {
+  opacity: 1;
+}
+
+.settings svg {
+  fill: var(--gray);
+  width: 24px;
+  height: 24px;
 }
 
 .darkmode > .toggle {

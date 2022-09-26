@@ -7,7 +7,7 @@ import { withSize } from 'react-sizeme';
 import Greeting from './Greeting';
 import './Visualization.css'
 
-interface IVisualization {
+export interface IVisualization {
   tasks: Tasks[],
   theme: string,
   size: {

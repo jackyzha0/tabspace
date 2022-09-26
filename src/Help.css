@@ -1,0 +1,38 @@
+.help {
+  padding: 4em 0;
+}
+
+.item-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2em;
+}
+
+.item {
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.item.wide {
+  max-width: calc(600px + 2em);
+}
+
+.item-container .preview {
+  padding: 1em;
+  border-radius: 5px;
+  border: 1px solid var(--outlinegray);
+  margin-top: auto;
+}
+
+.preview * {
+  margin: 0;
+}
+
+.preview hr {
+  margin: 1em 0;
+}
+
+.preview img {
+  padding: 0;
+}
