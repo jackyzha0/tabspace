@@ -42,13 +42,21 @@ function getAttributes(match: ExtendedRegExpMatchArray) {
   return parseTime(text);
 }
 
+declare module '@tiptap/core' {
+  interface Commands<ReturnType> {
+    timedTask: {
+      toggleDue: () => ReturnType,
+    }
+  }
+}
+
 export const TimedTask = Mark.create({
   name: 'timedTask',
 
   addAttributes() {
     return {
       time: {
-        default: null,
+        default: '',
         parseHTML: element => element.getAttribute('data-time') || new Date().getTime(),
         renderHTML: attributes => ({
           'data-time': attributes.time,
@@ -72,6 +80,22 @@ export const TimedTask = Mark.create({
           style: `background: ${attributes.color}`
         })
       }
+    }
+  },
+
+  addCommands() {
+    return {
+      toggleDue: () => ({commands}) => {
+        commands.toggleMark(this.name)
+        return commands.insertContent("due ")
+      }
+    }
+  },
+
+  addKeyboardShortcuts() {
+    return {
+      'Mod-d': () => this.editor.commands.toggleDue(),
+      'Mod-D': () => this.editor.commands.toggleDue(),
     }
   },
 
