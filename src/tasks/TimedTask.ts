@@ -68,6 +68,10 @@ export const TimedTask = Mark.create({
           }),
         })
       },
+      text: {
+        default: '',
+        parseHTML: element => element.innerText,
+      },
       uid: {
         default: null,
         renderHTML: attributes => ({
@@ -87,7 +91,7 @@ export const TimedTask = Mark.create({
     return {
       toggleDue: () => ({commands}) => {
         commands.toggleMark(this.name)
-        return commands.insertContent("due ")
+        return commands.insertContent("due\u00A0")
       }
     }
   },
@@ -109,8 +113,9 @@ export const TimedTask = Mark.create({
           const end = pos + node.nodeSize;
           transaction.removeMark(start, end, timeMark);
           const newMark = this.type.create({
+            ...timeMark.attrs,
+            text: node.text,
             color: calculateUrgency(new Date(timeMark.attrs.time)),
-            time: timeMark.attrs.time,
             uid: nanoid(),
           })
           transaction.addMark(start, end, newMark);
@@ -128,7 +133,7 @@ export const TimedTask = Mark.create({
     this.editor.state.doc.descendants((node, pos) => {
       if (node.type.name === 'text') {
         const timeMark = node.marks.find((mark) => mark.type.name === this.name);
-        if (timeMark !== undefined) {
+        if (timeMark !== undefined && node.text !== timeMark.attrs.text) {
           const start = pos;
           const end = pos + node.nodeSize;
           const newTime = parseTime(node.text);

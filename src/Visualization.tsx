@@ -59,7 +59,7 @@ function Visualization(props: IVisualization) {
     <Greeting numTasks={props.tasks.length} numUrgentTasks={props.tasks.filter(isDueSoon).length} />
     <ForceGraph2D
       ref={fgRef}
-      height={450}
+      height={300}
       width={props.size.width}
       nodeLabel=""
       onNodeClick={(node) => {
