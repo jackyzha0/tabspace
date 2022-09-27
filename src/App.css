@@ -78,6 +78,7 @@ a {
   font-size: 1em;
   color: var(--secondary);
   transition: color 0.3s ease !important;
+  cursor: pointer;
 }
 
 a:hover {
