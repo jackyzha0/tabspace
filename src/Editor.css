@@ -34,9 +34,11 @@ span[data-time]::after {
   position: absolute;
   bottom: 100%;
   left: 0;
-  background: var(--lightgray);
+  background: var(--light);
   padding: 0.15em 0.3em;
+  margin-bottom: 5px;
   border-radius: 5px;
+  border: 1px solid var(--outlinegray);
   white-space: nowrap;
   overflow-x: visible;
   transition: opacity 0.3s ease;

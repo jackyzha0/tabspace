@@ -10,7 +10,7 @@ const DEFAULT_SAVE: OutputData = {
       content: [{ type: "text", text: "🪴 Welcome to your Tabspace" }]
     }, {
       type: "paragraph",
-      content: [{ type: "text", text: "Treat this as your own little scratch space in the comfort of your new tab page. Text here is saved as you write and your notes and tasks never leave your computer." }]
+      content: [{ type: "text", text: "Treat this as your own little scratch space in the comfort of your new tab page. Your content is saved as you write and never leave your computer." }]
     }, {
       type: "paragraph",
       content: [{ type: "text", "marks": [{ type: "bold" }], "text": "This is your new digital home, set it up however you'd like!" }]
