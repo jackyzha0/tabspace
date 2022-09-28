@@ -31,7 +31,7 @@ function parseTime(text: string | undefined) {
   const parsedResults = chrono.parse(text || "", undefined, { forwardDate: true });
   if (parsedResults.length > 0) {
     const parsedTime = parsedResults[0];
-    return { time: parsedTime.start.date().getTime() }
+    return { time: parsedTime.start.date().getTime(), text }
   } else {
     return false
   }
