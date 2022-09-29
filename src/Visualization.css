@@ -3,6 +3,10 @@
   min-height: 300px;
 }
 
+.spacer {
+  min-height: 4em;
+}
+
 .visualization:hover > .overlay {
   opacity: 0.1;
 } 

@@ -13,11 +13,14 @@
   bottom: 0;
   position: absolute;
   z-index: 1;
+}
+
+.settings-item svg {
   opacity: 0.4;
   transition: opacity 0.3s ease;
 }
 
-.settings-bar:hover {
+.settings-item svg:hover {
   opacity: 1;
 }
 
@@ -27,35 +30,10 @@
   height: 30px;
 }
 
-.darkmode > .toggle {
-  display: none;
-  box-sizing: border-box;
-}
-
 .darkmode svg {
-  opacity: 0;
   position: absolute;
-  width: 20px;
-  height: 20px;
-  top: calc(50% - 11px);
-  margin: 0 7px;
+  width: 24px;
+  height: 24px;
+  top: calc(50% - 13px);
   fill: var(--gray);
-  transition: opacity 0.1s ease;
 }
-
-.toggle:checked ~ label > #dayIcon {
-  opacity: 0;
-}
-
-.toggle:checked ~ label > #nightIcon {
-  opacity: 1;
-}
-
-.toggle:not(:checked) ~ label > #dayIcon {
-  opacity: 1;
-}
-
-.toggle:not(:checked) ~ label > #nightIcon {
-  opacity: 0;
-}
-

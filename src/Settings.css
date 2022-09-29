@@ -1,0 +1,44 @@
+.config-item > input[type="checkbox"] {
+  visibility: hidden;
+  margin-right: 2em;
+}
+
+.config-item {
+  margin: 1em;
+  position: relative;
+}
+
+.config-item h3 {
+  margin: 0;
+  display: inline-block;
+}
+
+.config-item > label {
+  padding: 2px;
+  border: 1px solid var(--outlinegray);
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  left: 0;
+  top: 0;
+  position: absolute;
+  border-radius: 5px;
+  margin-right: 2em;
+}
+
+.config-item > label:after {
+  content: "";
+  margin: 4px;
+  top: 0;
+  left: 0;
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  opacity: 0;
+  border-radius: 3px;
+  background-color: var(--secondary);
+}
+
+input[type="checkbox"]:checked + label:after {
+  opacity: 1;
+}

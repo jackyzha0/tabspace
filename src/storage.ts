@@ -1,4 +1,6 @@
 import { JSONContent } from "@tiptap/react";
+import create from 'zustand';
+import { persist } from 'zustand/middleware'
 
 type OutputData = JSONContent;
 const DEFAULT_SAVE: OutputData = {
@@ -23,7 +25,7 @@ const DEFAULT_SAVE: OutputData = {
       content: [{ type: "listItem", content: [{ type: "paragraph", content: [{ type: "text", "text": "Not sure what you can do? Check out the " }, { type: "text", "marks": [{ type: "bold" }], "text": "help guide" }, { type: "text", "text": " by clicking on the information icon in the bottom right corner." }] }] }]
     }, {
       type: "bulletList",
-      content: [{ type: "listItem", content: [{ type: "paragraph", content: [{ type: "text", "text": "Delete this start text and make this page your own! " }, { type: "text", "marks": [{ type: "timedTask", "attrs": { "time": 1664254800000, "uid": "RiDD0iLlc7SUnkfMWPe_W", "color": "#ffa33355" } }], "text": "due tonight" }] }] }]
+      content: [{ type: "listItem", content: [{ type: "paragraph", content: [{ type: "text", "text": "Delete this start text and make this page your own!" } ] }] }]
     }, {
       type: "horizontalRule"
     }, {
@@ -41,3 +43,29 @@ export function load(): OutputData {
 export function save(blocks: OutputData) {
   localStorage.setItem('blocks', JSON.stringify(blocks));
 };
+
+// zustand related
+interface SettingsState {
+  isDarkmode: boolean,
+  toggleTheme: () => void,
+  showVisualization: boolean,
+  toggleVisualization: () => void,
+}
+
+export function loadDefault() {
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+}
+
+export const useSettingsStore = create<SettingsState>()(persist(
+  (set, get) => ({
+    isDarkmode: loadDefault() === 'dark',
+    toggleTheme: () => set({ isDarkmode: get().isDarkmode ? false : true }),
+    showVisualization: false,
+    toggleVisualization: () => set({ showVisualization: !get().showVisualization })
+  }),
+  {
+    version: 1,
+    name: 'settings',
+  }
+))
+

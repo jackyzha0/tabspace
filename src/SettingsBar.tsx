@@ -1,41 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'wouter';
 import './SettingsBar.css'
 
-export function loadDefault() {
-  const userPref = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
-  const currentTheme = localStorage.getItem('theme') || userPref;
-  document.documentElement.setAttribute('saved-theme', currentTheme);
-  return currentTheme;
-}
-
-interface ISettingsBar {
-  theme: string,
-  setTheme: (newTheme: string) => void,
-}
-
-function SettingsBar({ theme, setTheme }: ISettingsBar) {
-  const setDocumentTheme = (theme: string) => {
-    setTheme(theme);
-    localStorage.setItem('theme', theme);
-    document.documentElement.setAttribute('saved-theme', theme);
-  }
-
-  const switchTheme = () => {
-    setDocumentTheme(theme === 'dark' ? 'light' : 'dark');
-  }
-
-  useEffect(() => {
-    const updateClosure = (event: StorageEvent) => {
-      if (event.storageArea !== localStorage) return;
-      if (event.key === 'theme' && event.newValue !== null) {
-        setDocumentTheme(event.newValue);
-      }
-    };
-    window.addEventListener('storage', updateClosure);
-    return () => window.removeEventListener('storage', updateClosure);
-  }, []);
-
+function SettingsBar() {
   return (<div className='settings-bar'>
     <Link href="/index.html/help">
       <div className='settings-item helpbutton'>
@@ -44,22 +11,14 @@ function SettingsBar({ theme, setTheme }: ISettingsBar) {
         </svg>
       </div>
     </Link>
-    <div className='settings-item darkmode'>
-      <input className='toggle' id='darkmode-toggle' type='checkbox' tabIndex={-1} onChange={switchTheme} checked={theme === 'dark'} />
-      <label id="toggle-label-light" htmlFor='darkmode-toggle' tabIndex={-1}>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" >
-          <title>Light Mode</title>
-          <path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z" />
+    <Link href="/index.html/settings">
+      <div className='settings-item darkmode'>
+        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 24 24">
+          <path d="M 10.490234 2 C 10.011234 2 9.6017656 2.3385938 9.5097656 2.8085938 L 9.1757812 4.5234375 C 8.3550224 4.8338012 7.5961042 5.2674041 6.9296875 5.8144531 L 5.2851562 5.2480469 C 4.8321563 5.0920469 4.33375 5.2793594 4.09375 5.6933594 L 2.5859375 8.3066406 C 2.3469375 8.7216406 2.4339219 9.2485 2.7949219 9.5625 L 4.1132812 10.708984 C 4.0447181 11.130337 4 11.559284 4 12 C 4 12.440716 4.0447181 12.869663 4.1132812 13.291016 L 2.7949219 14.4375 C 2.4339219 14.7515 2.3469375 15.278359 2.5859375 15.693359 L 4.09375 18.306641 C 4.33275 18.721641 4.8321562 18.908906 5.2851562 18.753906 L 6.9296875 18.1875 C 7.5958842 18.734206 8.3553934 19.166339 9.1757812 19.476562 L 9.5097656 21.191406 C 9.6017656 21.661406 10.011234 22 10.490234 22 L 13.509766 22 C 13.988766 22 14.398234 21.661406 14.490234 21.191406 L 14.824219 19.476562 C 15.644978 19.166199 16.403896 18.732596 17.070312 18.185547 L 18.714844 18.751953 C 19.167844 18.907953 19.66625 18.721641 19.90625 18.306641 L 21.414062 15.691406 C 21.653063 15.276406 21.566078 14.7515 21.205078 14.4375 L 19.886719 13.291016 C 19.955282 12.869663 20 12.440716 20 12 C 20 11.559284 19.955282 11.130337 19.886719 10.708984 L 21.205078 9.5625 C 21.566078 9.2485 21.653063 8.7216406 21.414062 8.3066406 L 19.90625 5.6933594 C 19.66725 5.2783594 19.167844 5.0910937 18.714844 5.2460938 L 17.070312 5.8125 C 16.404116 5.2657937 15.644607 4.8336609 14.824219 4.5234375 L 14.490234 2.8085938 C 14.398234 2.3385937 13.988766 2 13.509766 2 L 10.490234 2 z M 12 8 C 14.209 8 16 9.791 16 12 C 16 14.209 14.209 16 12 16 C 9.791 16 8 14.209 8 12 C 8 9.791 9.791 8 12 8 z" />
         </svg>
-      </label>
-      <label id="toggle-label-dark" htmlFor='darkmode-toggle' tabIndex={-1}>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="nightIcon" x="0px" y="0px" viewBox="0 0 100 100">
-          <title>Dark Mode</title>
-          <path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z" />
-        </svg>
-      </label>
-    </div>
-  </div>)
+      </div>
+    </Link>
+  </div >)
 }
 
 export default SettingsBar;

@@ -6,10 +6,10 @@ import { MS_IN_DAYS } from './tasks/TimedTask';
 import { withSize } from 'react-sizeme';
 import Greeting from './Greeting';
 import './Visualization.css'
+import { useSettingsStore } from './storage';
 
 export interface IVisualization {
   tasks: Tasks[],
-  theme: string,
   size: {
     width: number,
     height: number,
@@ -31,6 +31,8 @@ function isDueSoon(task: Tasks) {
 
 function Visualization(props: IVisualization) {
   const fgRef = useRef<ForceGraphMethods>();
+  const isDark = useSettingsStore(state => state.isDarkmode);
+  const show = useSettingsStore(state => state.showVisualization);
   const nodes = props.tasks.map(task => ({
     id: task.uid,
     val: dateToSize(task.due)
@@ -48,12 +50,15 @@ function Visualization(props: IVisualization) {
 
   // @ts-ignore
   const paint = useCallback((node, ctx) => {
-    const isDark = props.theme === 'dark';
     ctx.fillStyle = isDark ? "#444444" : "#cacaca";
     ctx.beginPath();
     ctx.arc(node.x, node.y, 4 * Math.sqrt(node.val), 0, 2 * Math.PI, false);
     ctx.fill();
-  }, [props.theme])
+  }, [isDark])
+
+  if (!show) {
+    return <div className="spacer"></div>;
+  }
 
   return <div className="visualization">
     <Greeting numTasks={props.tasks.length} numUrgentTasks={props.tasks.filter(isDueSoon).length} />
