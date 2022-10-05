@@ -7,6 +7,7 @@ import './Editor.css';
 import Focus from '@tiptap/extension-focus';
 import Link from '@tiptap/extension-link';
 import Typography from '@tiptap/extension-typography';
+import Blockquote from '@tiptap/extension-blockquote';
 import Image from '@tiptap/extension-image';
 import { TimedTask } from './tasks/TimedTask';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -51,7 +52,11 @@ const Editor = ({ setTasks }: IEditor) => {
           HTMLAttributes: {
             class: 'highlight'
           }
-        }
+        },
+        blockquote: false,
+      }),
+      Blockquote.extend({
+        priority: 100
       }),
       Focus.configure({
         mode: 'deepest',
