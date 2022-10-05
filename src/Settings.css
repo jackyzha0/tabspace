@@ -6,10 +6,14 @@
 .config-item {
   margin: 1em;
   position: relative;
+  display: flex;
 }
 
 .config-item h3 {
   margin: 0;
+}
+
+.config-item > .desc {
   display: inline-block;
 }
 
@@ -17,8 +21,8 @@
   padding: 2px;
   border: 1px solid var(--outlinegray);
   cursor: pointer;
-  height: 20px;
-  width: 20px;
+  height: 16px;
+  width: 16px;
   left: 0;
   top: 0;
   position: absolute;
@@ -32,8 +36,8 @@
   top: 0;
   left: 0;
   position: absolute;
-  height: 16px;
-  width: 16px;
+  height: 12px;
+  width: 12px;
   opacity: 0;
   border-radius: 3px;
   background-color: var(--secondary);
