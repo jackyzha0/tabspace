@@ -19,7 +19,6 @@
     "@types/react-dom": "^18.0.6",
     "chrono-node": "^2.4.1",
     "d3-force": "^3.0.0",
-    "fetch-opengraph": "^1.0.35",
     "nanoid": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
