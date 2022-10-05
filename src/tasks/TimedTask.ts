@@ -45,14 +45,15 @@ function getAttributes(match: ExtendedRegExpMatchArray) {
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     timedTask: {
-      toggleDue: () => ReturnType,
+      setDue: () => ReturnType,
     }
   }
 }
 
 export const TimedTask = Mark.create({
   name: 'timedTask',
-
+  exitable: true,
+  keepOnSplit: false,
   addAttributes() {
     return {
       time: {
@@ -89,8 +90,8 @@ export const TimedTask = Mark.create({
 
   addCommands() {
     return {
-      toggleDue: () => ({commands}) => {
-        commands.toggleMark(this.name)
+      setDue: () => ({commands}) => {
+        commands.setMark(this.name)
         return commands.insertContent("due\u00A0")
       }
     }
@@ -98,8 +99,8 @@ export const TimedTask = Mark.create({
 
   addKeyboardShortcuts() {
     return {
-      'Mod-d': () => this.editor.commands.toggleDue(),
-      'Mod-D': () => this.editor.commands.toggleDue(),
+      'Mod-d': () => this.editor.commands.setDue(),
+      'Mod-D': () => this.editor.commands.setDue(),
     }
   },
 
