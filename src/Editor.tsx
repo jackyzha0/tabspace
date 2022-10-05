@@ -56,9 +56,7 @@ const Editor = ({ setTasks }: IEditor) => {
       Focus.configure({
         mode: 'deepest',
       }),
-      Link.configure({
-        protocols: ['mailto'],
-      }),
+      Link,
       Placeholder.configure({
         placeholder: "What's on your mind?",
       }),
@@ -121,12 +119,24 @@ const Editor = ({ setTasks }: IEditor) => {
     }
   }
 
+  const handleInsertNewline = () => {
+    if (editor) {
+      editor.commands.focus('end')
+      editor.commands.createParagraphNear()
+    }
+  }
+
   if (!editor) {
     return null
   }
 
   return (
-    <EditorContent onDrop={handleDrop} editor={editor} onPaste={handlePaste} />
+    <>
+      <EditorContent onDrop={handleDrop} editor={editor} onPaste={handlePaste} />
+      <div className="newline-handle" onClick={handleInsertNewline}>
+        <p>+ Click here to insert a new line</p>
+      </div>
+    </>
   )
 }
 
