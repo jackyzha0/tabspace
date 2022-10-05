@@ -49,9 +49,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/open-graph-scraper": "^4.8.1",
-    "gh-pages": "^4.0.0"
   }
 }
