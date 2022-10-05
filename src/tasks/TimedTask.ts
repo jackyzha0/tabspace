@@ -1,6 +1,6 @@
 import { Mark, markPasteRule, markInputRule, ExtendedRegExpMatchArray } from '@tiptap/core'
-import * as chrono from 'chrono-node';
 import { nanoid } from 'nanoid';
+import chrono from '../utils/ModdedChrono';
 
 export interface TimedTaskOptions {
   HTMLAttributes: Record<string, any>,
