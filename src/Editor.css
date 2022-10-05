@@ -55,7 +55,6 @@ span[data-time]:hover::after {
 }
 
 .newline-handle {
-  padding: 1em 0;
   opacity: 0.1;
   cursor: pointer;
   transition: opacity 0.3s ease;

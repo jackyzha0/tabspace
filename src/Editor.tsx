@@ -5,12 +5,12 @@ import StarterKit from '@tiptap/starter-kit'
 import { load, save } from './storage';
 import './Editor.css';
 import Focus from '@tiptap/extension-focus';
-import Link from '@tiptap/extension-link';
 import Typography from '@tiptap/extension-typography';
 import Blockquote from '@tiptap/extension-blockquote';
 import Image from '@tiptap/extension-image';
 import { TimedTask } from './tasks/TimedTask';
 import Placeholder from '@tiptap/extension-placeholder';
+import Link from '@tiptap/extension-link';
 
 export interface Tasks {
   due: number, // JS date in milliseconds past epoch
@@ -127,7 +127,7 @@ const Editor = ({ setTasks }: IEditor) => {
   const handleInsertNewline = () => {
     if (editor) {
       editor.commands.focus('end')
-      editor.commands.createParagraphNear()
+      editor.commands.enter()
     }
   }
 

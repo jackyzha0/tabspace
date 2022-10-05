@@ -7,16 +7,26 @@
   cursor: pointer;
 }
 
+.settings-container {
+  width: 100vw;
+  height: 100vh;
+  position: sticky;
+  margin-bottom: -100vh;
+  top: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
 .settings-bar {
   display: flex;
   right: 0;
-  bottom: 0;
+  top: calc(100vh - 6.5em);
   position: absolute;
-  z-index: 1;
+  pointer-events: all;
 }
 
 .settings-item svg {
-  opacity: 0.4;
+  opacity: 0.3;
   transition: opacity 0.3s ease;
 }
 
