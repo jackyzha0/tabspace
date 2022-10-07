@@ -45,7 +45,7 @@ span[data-time] {
   position: relative;
   white-space: nowrap;
 
-  &:highlight {
+  &.highlight {
     background: var(--secondary) !important;  
     transition: background 0.3s ease;
   }

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { forceCollide, forceManyBody } from 'd3-force'
 import ForceGraph2D, { ForceGraphMethods } from 'react-force-graph-2d';
 import { Tasks } from './Editor';
@@ -7,6 +7,7 @@ import { withSize } from 'react-sizeme';
 import Greeting from './Greeting';
 import './Visualization.css'
 import { useSettingsStore } from './storage';
+import { interpolate, interpolateLab } from 'd3-interpolate';
 
 export interface IVisualization {
   tasks: Tasks[],
@@ -26,17 +27,29 @@ function dateToSize(date: number) {
 
 function isDueSoon(task: Tasks) {
   return daysDiff(task.due) < 3
+}
 
+const TRANSITION_TIME = 100;
+function nowAddTransitionTime(): number {
+  const now = new Date();
+  return now.getTime() + TRANSITION_TIME;
 }
 
 function Visualization(props: IVisualization) {
   const fgRef = useRef<ForceGraphMethods>();
+  const [hover, setHover] = useState<string>();
+  const [hoverPrev, setHoverPrev] = useState<string>();
+  const [hoverFinishTime, setHoverFinishTime] = useState<number>(new Date().getTime());
   const isDark = useSettingsStore(state => state.isDarkmode);
   const show = useSettingsStore(state => state.showVisualization);
-  const nodes = props.tasks.map(task => ({
-    id: task.uid,
-    val: dateToSize(task.due)
-  }))
+
+  const data = useMemo(() => {
+    const nodes = props.tasks.map(task => ({
+      id: task.uid,
+      val: dateToSize(task.due)
+    }))
+    return { nodes, links: [] }
+  }, [props.tasks])
 
   useEffect(() => {
     const fg = fgRef.current;
@@ -50,11 +63,21 @@ function Visualization(props: IVisualization) {
 
   // @ts-ignore
   const paint = useCallback((node, ctx) => {
-    ctx.fillStyle = isDark ? "#444444" : "#cacaca";
+    const t = 1 - Math.max((hoverFinishTime - new Date().getTime()) / TRANSITION_TIME, 0);
+    const hoverCol = isDark ? "#6b879a" : "#284b63";
+    const normalCol = isDark ? "#444444" : "#cacaca";
+    if (node.id === hover) {
+      ctx.fillStyle = interpolateLab(normalCol, hoverCol)(t)
+    } else if (node.id === hoverPrev) {
+      ctx.fillStyle = interpolateLab(hoverCol, normalCol)(t)
+    } else {
+      ctx.fillStyle = normalCol;
+    }
+    console.log(ctx.fillStyle, t)
     ctx.beginPath();
     ctx.arc(node.x, node.y, 4 * Math.sqrt(node.val), 0, 2 * Math.PI, false);
     ctx.fill();
-  }, [isDark])
+  }, [isDark, hover, hoverFinishTime, hoverPrev])
 
   if (!show) {
     return <div className="spacer"></div>;
@@ -69,12 +92,18 @@ function Visualization(props: IVisualization) {
       nodeLabel=""
       warmupTicks={5}
       onNodeHover={(node, prev) => {
-        // guard against no new hover target
         if (node && node.id) {
           const nodeEl = document.getElementById(node.id.toString());
           if (nodeEl) {
+            setHoverPrev(hover);
+            setHover(node.id + "");
+            setHoverFinishTime(nowAddTransitionTime());
             nodeEl.classList.add("highlight");
           }
+        } else {
+          setHoverPrev(hover);
+          setHover(undefined);
+          setHoverFinishTime(nowAddTransitionTime());
         }
 
         if (prev && prev.id) {
@@ -88,14 +117,16 @@ function Visualization(props: IVisualization) {
         const nodeEl = document.getElementById((node.id || "").toString());
         if (nodeEl) {
           nodeEl.classList.add("highlight");
-          nodeEl.scrollIntoView();
+          nodeEl.scrollIntoView({
+            behavior: 'smooth'
+          });
           setTimeout(() => nodeEl.classList.remove("highlight"), 700);
         }
       }}
       enablePanInteraction={false}
       enableZoomInteraction={false}
       nodeCanvasObject={paint}
-      graphData={{ nodes, links: [] }}
+      graphData={data}
     />
   </div>
 }
