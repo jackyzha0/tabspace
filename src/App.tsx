@@ -13,12 +13,12 @@ function App() {
   const [location] = useLocation();
   const [tasks, setTasks] = useState<Tasks[]>([]);
 
-  const isDarkmode = useSettingsStore(state => state.isDarkmode);
-  const fadeIn = useSettingsStore(state => state.enableFadeIn);
+  const state = useSettingsStore();
   useEffect(() => {
-    document.documentElement.setAttribute('saved-theme', isDarkmode ? 'dark' : 'light');
-    document.documentElement.setAttribute('fade-in', fadeIn ? 'true' : 'false');
-  }, [isDarkmode, fadeIn])
+    document.documentElement.setAttribute('saved-theme', state.isDarkmode ? 'dark' : 'light');
+    document.documentElement.setAttribute('fade-in', state.enableFadeIn ? 'true' : 'false');
+    document.documentElement.setAttribute('task-animation', state.enableTaskAnimation ? 'true' : 'false');
+  }, [state])
 
   useEffect(() => {
     window.scrollTo(0, 0);

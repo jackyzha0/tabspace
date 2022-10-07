@@ -52,6 +52,8 @@ interface SettingsState {
   toggleVisualization: () => void,
   enableFadeIn: boolean,
   toggleFadeIn: () => void,
+  enableTaskAnimation: boolean,
+  toggleTaskAnimation: () => void,
 }
 
 export function loadDefault() {
@@ -66,6 +68,8 @@ export const useSettingsStore = create<SettingsState>()(persist(
     toggleVisualization: () => set({ showVisualization: !get().showVisualization }),
     enableFadeIn: true,
     toggleFadeIn: () => set({ enableFadeIn: !get().enableFadeIn }),
+    enableTaskAnimation: true,
+    toggleTaskAnimation: () => set({ enableTaskAnimation: !get().enableTaskAnimation }),
   }),
   {
     version: 1,

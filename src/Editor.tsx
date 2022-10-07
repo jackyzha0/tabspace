@@ -1,4 +1,4 @@
-import React, { ClipboardEventHandler, DragEvent, useEffect, useRef, useState } from 'react';
+import React, { ClipboardEventHandler, DragEvent, useEffect, useRef } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react'
 import { Editor as TiptapEditor } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
@@ -49,8 +49,8 @@ const Editor = ({ setTasks }: IEditor) => {
     traverseMarks(editor, (timeMark) => {
       const id = timeMark.attrs.uid;
       const spanEl = document.getElementById(id);
-      if (spanEl) {
-        newPositions.set(id, spanEl.getBoundingClientRect())
+      if (spanEl && spanEl.parentElement) {
+        newPositions.set(id, spanEl.parentElement.getBoundingClientRect())
       }
     })
     positions.current = newPositions
@@ -66,7 +66,9 @@ const Editor = ({ setTasks }: IEditor) => {
           .filter(({ uid }) => !newTasks.find((task: Tasks) => task.uid === uid))
           .map(t => t.uid)
 
-        completedTasks.forEach((id) => {
+        // only animate one task because reflow screws the rest of them up
+        if (completedTasks.length === 1) {
+          const id = completedTasks[0]
           const boundingRect = positions.current.get(id);
           const effectLayer = document.getElementById("effects-layer");
           if (effectLayer && boundingRect) {
@@ -76,15 +78,14 @@ const Editor = ({ setTasks }: IEditor) => {
             Object.assign(effect.style, {
               width: `${width}px`,
               height: `${height}px`,
-              top: `${top}px`,
-              left: `${left}px`,
+              top: `${top + window.scrollY}px`,
+              left: `${left + window.scrollX}px`,
             });
             effectLayer.appendChild(effect);
             positions.current.delete(id);
             setTimeout(() => effect.remove(), 500)
           }
-
-        })
+        }
         return newTasks;
       } else {
         return oldTasks;
