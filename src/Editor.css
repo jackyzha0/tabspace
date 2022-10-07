@@ -23,7 +23,7 @@ span[data-time] {
 }
 
 span[data-time].highlight {
-  background: #ff3333bb !important;  
+  background: var(--secondary) !important;  
   transition: background 0.3s ease;
 }
 

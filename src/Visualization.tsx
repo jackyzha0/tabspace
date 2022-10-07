@@ -67,12 +67,29 @@ function Visualization(props: IVisualization) {
       height={300}
       width={props.size.width}
       nodeLabel=""
+      warmupTicks={5}
+      onNodeHover={(node, prev) => {
+        // guard against no new hover target
+        if (node && node.id) {
+          const nodeEl = document.getElementById(node.id.toString());
+          if (nodeEl) {
+            nodeEl.classList.add("highlight");
+          }
+        }
+
+        if (prev && prev.id) {
+          const nodeEl = document.getElementById(prev.id.toString());
+          if (nodeEl && nodeEl.classList.contains("highlight")) {
+            setTimeout(() => nodeEl.classList.remove("highlight"), 100);
+          }
+        }
+      }}
       onNodeClick={(node) => {
         const nodeEl = document.getElementById((node.id || "").toString());
         if (nodeEl) {
           nodeEl.classList.add("highlight");
           nodeEl.scrollIntoView();
-          setTimeout(() => nodeEl.classList.remove("highlight"), 800);
+          setTimeout(() => nodeEl.classList.remove("highlight"), 700);
         }
       }}
       enablePanInteraction={false}
