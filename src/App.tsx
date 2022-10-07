@@ -14,9 +14,11 @@ function App() {
   const [tasks, setTasks] = useState<Tasks[]>([]);
 
   const isDarkmode = useSettingsStore(state => state.isDarkmode);
+  const fadeIn = useSettingsStore(state => state.enableFadeIn);
   useEffect(() => {
     document.documentElement.setAttribute('saved-theme', isDarkmode ? 'dark' : 'light');
-  }, [isDarkmode])
+    document.documentElement.setAttribute('fade-in', fadeIn ? 'true' : 'false');
+  }, [isDarkmode, fadeIn])
 
   useEffect(() => {
     window.scrollTo(0, 0);

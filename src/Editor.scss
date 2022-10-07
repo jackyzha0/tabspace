@@ -15,7 +15,7 @@
     transition: background 0.3s ease;
   }
 
-  & > * {
+  [fade-in="true"] & > * {
     animation: fadeIn ease 0.5s;
     opacity: 0;
     animation-fill-mode: forwards;

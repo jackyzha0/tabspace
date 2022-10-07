@@ -25,7 +25,7 @@ const DEFAULT_SAVE: OutputData = {
       content: [{ type: "listItem", content: [{ type: "paragraph", content: [{ type: "text", "text": "Not sure what you can do? Check out the " }, { type: "text", "marks": [{ type: "bold" }], "text": "help guide" }, { type: "text", "text": " by clicking on the information icon in the bottom right corner." }] }] }]
     }, {
       type: "bulletList",
-      content: [{ type: "listItem", content: [{ type: "paragraph", content: [{ type: "text", "text": "Delete this start text and make this page your own!" } ] }] }]
+      content: [{ type: "listItem", content: [{ type: "paragraph", content: [{ type: "text", "text": "Delete this start text and make this page your own!" }] }] }]
     }, {
       type: "horizontalRule"
     }, {
@@ -50,6 +50,8 @@ interface SettingsState {
   toggleTheme: () => void,
   showVisualization: boolean,
   toggleVisualization: () => void,
+  enableFadeIn: boolean,
+  toggleFadeIn: () => void,
 }
 
 export function loadDefault() {
@@ -61,7 +63,9 @@ export const useSettingsStore = create<SettingsState>()(persist(
     isDarkmode: loadDefault() === 'dark',
     toggleTheme: () => set({ isDarkmode: get().isDarkmode ? false : true }),
     showVisualization: false,
-    toggleVisualization: () => set({ showVisualization: !get().showVisualization })
+    toggleVisualization: () => set({ showVisualization: !get().showVisualization }),
+    enableFadeIn: true,
+    toggleFadeIn: () => set({ enableFadeIn: !get().enableFadeIn }),
   }),
   {
     version: 1,
