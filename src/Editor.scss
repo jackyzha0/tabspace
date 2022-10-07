@@ -1,0 +1,89 @@
+@use 'sass:math';
+
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.ProseMirror {
+  & * {
+    transition: background 0.3s ease;
+  }
+
+  & > * {
+    animation: fadeIn ease 0.5s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    @for $i from 1 through 50 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{math.log($i, 10) / 5}s;
+      }
+    }
+  }
+
+  & p.is-editor-empty:first-child::before {
+    color: var(--outlinegray);
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+span[data-time] {
+  padding: 0.15em 0.3em;
+  border-radius: 5px;
+  position: relative;
+  white-space: nowrap;
+
+  &:highlight {
+    background: var(--secondary) !important;  
+    transition: background 0.3s ease;
+  }
+
+  &::after {
+    visibility: hidden;
+    opacity: 0;
+    content: attr(locale-string);
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    background: var(--light);
+    padding: 0.15em 0.3em;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--outlinegray);
+    white-space: nowrap;
+    overflow-x: visible;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover::after {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.has-focus {
+  border-radius: 5px;
+  background: var(--lightgray);
+}
+
+.newline-handle {
+  opacity: 0.1;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  &:hover {
+  opacity: 0.8;
+  }
+}
+

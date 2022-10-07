@@ -46,7 +46,7 @@ function Visualization(props: IVisualization) {
       fg.d3Force('collide', forceCollide().radius(node => 4 * Math.sqrt(node.val)));
       fg.d3ReheatSimulation();
     }
-  }, [fgRef.current]);
+  }, [fgRef]);
 
   // @ts-ignore
   const paint = useCallback((node, ctx) => {

@@ -3,7 +3,7 @@ import { useEditor, EditorContent } from '@tiptap/react'
 import { Editor as TiptapEditor } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
 import { load, save } from './storage';
-import './Editor.css';
+import './Editor.scss';
 import Focus from '@tiptap/extension-focus';
 import Typography from '@tiptap/extension-typography';
 import Blockquote from '@tiptap/extension-blockquote';
@@ -94,7 +94,7 @@ const Editor = ({ setTasks }: IEditor) => {
     };
     window.addEventListener('storage', updateClosure);
     return () => window.removeEventListener('storage', updateClosure);
-  }, [editor]);
+  });
 
   const insertImage = (img: File) => {
     const reader = new FileReader();
@@ -137,7 +137,7 @@ const Editor = ({ setTasks }: IEditor) => {
 
   return (
     <>
-      <EditorContent onDrop={handleDrop} editor={editor} onPaste={handlePaste} />
+      <EditorContent onDrop={handleDrop} editor={editor} onPaste={handlePaste} id="editor" />
       <div className="newline-handle" onClick={handleInsertNewline}>
         <p>+ Click here to insert a new line</p>
       </div>
