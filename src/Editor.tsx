@@ -72,6 +72,7 @@ const Editor = ({ setTasks }: IEditor) => {
     content: load(),
     onCreate: ({ editor }) => refreshTasks(editor),
     onUpdate: ({ editor }) => {
+      document.documentElement.setAttribute('fade-in', 'false');
       refreshTasks(editor);
       save(editor.getJSON())
     }
