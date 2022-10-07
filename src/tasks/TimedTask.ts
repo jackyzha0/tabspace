@@ -74,7 +74,7 @@ export const TimedTask = Mark.create({
         parseHTML: element => element.innerText,
       },
       uid: {
-        default: null,
+        default: nanoid(),
         renderHTML: attributes => ({
           id: attributes.uid
         })

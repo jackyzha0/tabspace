@@ -26,6 +26,7 @@ function App() {
 
   return (
     <div className="App">
+      <div id="effects-layer"></div>
       <SettingsBar />
       <div className="App-content">
         <Switch>

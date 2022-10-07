@@ -1,4 +1,4 @@
-import React, { ClipboardEventHandler, DragEvent, useEffect } from 'react';
+import React, { ClipboardEventHandler, DragEvent, useEffect, useRef, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react'
 import { Editor as TiptapEditor } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
@@ -11,30 +11,80 @@ import Image from '@tiptap/extension-image';
 import { TimedTask } from './tasks/TimedTask';
 import Placeholder from '@tiptap/extension-placeholder';
 import Link from '@tiptap/extension-link';
+import { Mark } from 'prosemirror-model';
 
 export interface Tasks {
   due: number, // JS date in milliseconds past epoch
   uid: string,
 }
 
+export interface Position {
+  top: number,
+  bottom: number,
+  left: number,
+  right: number,
+}
+
 export interface IEditor {
   setTasks: (cb: ((tasks: Tasks[]) => Tasks[])) => void,
 }
 
-const Editor = ({ setTasks }: IEditor) => {
-  const refreshTasks = (editor: TiptapEditor) => {
-    const newTasks: Tasks[] = []
-    editor.state.doc.descendants((node) => {
-      if (node.type.name === 'text') {
-        const timeMark = node.marks.find((mark) => mark.type.name === 'timedTask');
-        if (timeMark !== undefined) {
-          newTasks.push({ due: timeMark.attrs.time, uid: timeMark.attrs.uid })
-        }
+function traverseMarks(editor: TiptapEditor, cb: (timedMark: Mark) => void) {
+  editor.state.doc.descendants((node) => {
+    if (node.type.name === 'text') {
+      const timeMark = node.marks.find((mark) => mark.type.name === 'timedTask');
+      if (timeMark !== undefined) {
+        // @ts-ignore
+        cb(timeMark)
       }
-    });
+    }
+  });
+}
 
+const Editor = ({ setTasks }: IEditor) => {
+  const positions = useRef<Map<string, DOMRect>>(new Map());
+
+  const refreshPositions = (editor: TiptapEditor) => {
+    const newPositions: Map<string, DOMRect> = new Map(positions.current);
+    traverseMarks(editor, (timeMark) => {
+      const id = timeMark.attrs.uid;
+      const spanEl = document.getElementById(id);
+      if (spanEl) {
+        newPositions.set(id, spanEl.getBoundingClientRect())
+      }
+    })
+    positions.current = newPositions
+  }
+
+  const refreshTasks = (editor: TiptapEditor) => {
+    const newTasks: Tasks[] = [];
+    traverseMarks(editor, (timeMark) => newTasks.push({ due: timeMark.attrs.time, uid: timeMark.attrs.uid }))
     setTasks((oldTasks: Tasks[]) => {
       if (JSON.stringify(oldTasks) !== JSON.stringify(newTasks)) {
+        // check for deleted tasks here
+        const completedTasks = oldTasks
+          .filter(({ uid }) => !newTasks.find((task: Tasks) => task.uid === uid))
+          .map(t => t.uid)
+
+        completedTasks.forEach((id) => {
+          const boundingRect = positions.current.get(id);
+          const effectLayer = document.getElementById("effects-layer");
+          if (effectLayer && boundingRect) {
+            const { top, left, width, height } = boundingRect;
+            const effect = document.createElement("div");
+            effect.classList.add("effect");
+            Object.assign(effect.style, {
+              width: `${width}px`,
+              height: `${height}px`,
+              top: `${top}px`,
+              left: `${left}px`,
+            });
+            effectLayer.appendChild(effect);
+            positions.current.delete(id);
+            setTimeout(() => effect.remove(), 500)
+          }
+
+        })
         return newTasks;
       } else {
         return oldTasks;
@@ -71,6 +121,8 @@ const Editor = ({ setTasks }: IEditor) => {
     ],
     content: load(),
     onCreate: ({ editor }) => refreshTasks(editor),
+    // this triggers after reflow
+    onTransaction: ({ editor }) => refreshPositions(editor),
     onUpdate: ({ editor }) => {
       document.documentElement.setAttribute('fade-in', 'false');
       refreshTasks(editor);
