@@ -44,7 +44,7 @@
 }
 
 @media screen and (max-width: 1200px) {
-  .App-content {
+  .App-content > div {
     padding: 0 5vw 4em;
   }
 }
