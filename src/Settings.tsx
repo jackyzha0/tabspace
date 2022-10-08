@@ -19,8 +19,8 @@ function Checkbox({ name, state, toggle, description }: ICheckbox) {
       <p>{description}</p>
     </div>
   </div>)
-
 }
+
 
 function Settings() {
   const state = useSettingsStore();

@@ -4,8 +4,15 @@
 }
 
 .App-content {
-  padding: 0 30vw 4em;
   font-size: 1rem;
+  position: relative;
+}
+
+.App-content > div {
+  background-color: var(--light);
+  padding: 0 30vw 4em;
+  position: absolute;
+  min-height: 100%;
 }
 
 #effects-layer {
