@@ -10,14 +10,14 @@
 
 .App-content > div {
   background-color: var(--light);
-  padding: 0 30vw 4em;
-  position: absolute;
+  padding: 0 30vw 2em;
+  position: relative;
   min-height: 100%;
 }
 
 #effects-layer {
   position: absolute;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   pointer-events: none;
 }
@@ -45,7 +45,7 @@
 
 @media screen and (max-width: 1200px) {
   .App-content > div {
-    padding: 0 5vw 4em;
+    padding: 0 5vw 2em;
   }
 }
 

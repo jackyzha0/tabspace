@@ -1,5 +1,4 @@
 .settings-item {
-  margin: 2em 2em 2em 0;
   min-width: 30px;
 }
 
@@ -8,7 +7,7 @@
 }
 
 .settings-container {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   position: sticky;
   margin-bottom: -100vh;
@@ -19,8 +18,8 @@
 
 .settings-bar {
   display: flex;
-  right: 0;
-  top: calc(100vh - 6.5em);
+  right: 2em;
+  top: calc(100vh - 4.5em);
   position: absolute;
   pointer-events: all;
 }
@@ -34,16 +33,18 @@
   opacity: 1;
 }
 
+.helpbutton {
+  margin-right: 2em;
+}
+
 .helpbutton svg {
   fill: var(--gray);
   width: 24px;
-  height: 30px;
 }
 
 .darkmode svg {
   position: absolute;
   width: 24px;
   height: 24px;
-  top: calc(50% - 13px);
   fill: var(--gray);
 }
