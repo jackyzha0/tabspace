@@ -36,6 +36,7 @@
 .helpbutton {
   margin-right: 2em;
 }
+
 .helpbutton svg {
   fill: var(--gray);
   width: 24px;

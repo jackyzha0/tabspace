@@ -10,8 +10,8 @@
 
 .App-content > div {
   background-color: var(--light);
-  padding: 0 30vw 4em;
-  position: absolute;
+  padding: 0 30vw 2em;
+  position: relative;
   min-height: 100%;
 }
 
@@ -44,8 +44,8 @@
 }
 
 @media screen and (max-width: 1200px) {
-  .App-content {
-    padding: 0 5vw 4em;
+  .App-content > div {
+    padding: 0 5vw 2em;
   }
 }
 
