@@ -7,15 +7,6 @@ import Help from './Help';
 import Visualization, { IVisualization } from './Visualization';
 import { useSettingsStore } from './storage';
 import Settings from './Settings';
-import { motion, AnimatePresence } from "framer-motion";
-
-const AnimationSettings = {
-  transition: { duration: 0.6 },
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
-  default: { ease: "linear" },
-}
 
 function App() {
   const [location] = useLocation();
@@ -37,23 +28,15 @@ function App() {
       <div id="effects-layer"></div>
       <SettingsBar />
       <div className="App-content">
-        <AnimatePresence initial={false}>
-          <Switch key={location} location={location}>
-            <Route path="/index.html/help">
-              <motion.div {...AnimationSettings}>
-                <Help />
-              </motion.div>
-            </Route>
-            <Route path="/index.html/settings">
-              <motion.div {...AnimationSettings}>
-                <Settings />
-              </motion.div>
-            </Route>
-            <motion.div {...AnimationSettings}>
-              <Home tasks={tasks} setTasks={setTasks} />
-            </motion.div>
-          </Switch>
-        </AnimatePresence>
+        <Switch key={location} location={location}>
+          <Route path="/index.html/help">
+            <Help />
+          </Route>
+          <Route path="/index.html/settings">
+            <Settings />
+          </Route>
+          <Home tasks={tasks} setTasks={setTasks} />
+        </Switch>
       </div>
     </div>
   );
