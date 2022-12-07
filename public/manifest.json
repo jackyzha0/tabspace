@@ -1,7 +1,7 @@
 {
   "name": "TabSpace",
   "description": "A scratch space for your new tab page",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "manifest_version": 3,
   "chrome_url_overrides": {
     "newtab": "index.html"
