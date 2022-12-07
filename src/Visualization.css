@@ -4,7 +4,7 @@
 }
 
 .spacer {
-  min-height: 4em;
+  height: 0em;
 }
 
 .visualization:hover > .overlay {

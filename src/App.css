@@ -10,7 +10,7 @@
 
 .App-content > div {
   background-color: var(--light);
-  padding: 0 30vw 2em;
+  padding: 3em 30vw 2em;
   position: relative;
   min-height: 100%;
 }

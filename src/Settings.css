@@ -21,10 +21,10 @@
   padding: 2px;
   border: 1px solid var(--outlinegray);
   cursor: pointer;
-  height: 16px;
-  width: 16px;
+  height: 18px;
+  width: 18px;
   left: 0;
-  top: 0;
+  top: 3px;
   position: absolute;
   border-radius: 5px;
   margin-right: 2em;
@@ -32,7 +32,7 @@
 
 .config-item > label:after {
   content: "";
-  margin: 4px;
+  margin: 2px;
   top: 0;
   left: 0;
   position: absolute;
