@@ -1,7 +1,7 @@
 {
   "name": "tabspace",
   "private": true,
-  "version": "1.2.4",
+  "version": "1.2.5",
   "homepage": ".",
   "dependencies": {
     "@tiptap/extension-blockquote": "^2.8.0",
