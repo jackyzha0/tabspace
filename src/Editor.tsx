@@ -11,6 +11,7 @@ import Image from '@tiptap/extension-image';
 import { TimedTask } from './tasks/TimedTask';
 import Placeholder from '@tiptap/extension-placeholder';
 import Link from '@tiptap/extension-link';
+import TaskItem from '@tiptap/extension-task-item';
 import { Mark } from 'prosemirror-model';
 
 export interface Tasks {
@@ -119,6 +120,7 @@ const Editor = ({ setTasks }: IEditor) => {
       Typography,
       Image,
       TimedTask,
+      TaskItem,
     ],
     content: load(),
     onCreate: ({ editor }) => refreshTasks(editor),
