@@ -13,6 +13,7 @@ import Placeholder from '@tiptap/extension-placeholder';
 import Link from '@tiptap/extension-link';
 import TaskItem from '@tiptap/extension-task-item';
 import { Mark } from 'prosemirror-model';
+import TaskList from '@tiptap/extension-task-list';
 
 export interface Tasks {
   due: number, // JS date in milliseconds past epoch
@@ -120,7 +121,10 @@ const Editor = ({ setTasks }: IEditor) => {
       Typography,
       Image,
       TimedTask,
-      TaskItem,
+      TaskList,
+      TaskItem.configure({
+        nested: true,
+      }),
     ],
     content: load(),
     onCreate: ({ editor }) => refreshTasks(editor),
