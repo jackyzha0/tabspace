@@ -5,6 +5,7 @@
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -15,10 +16,11 @@
     transition: background 0.3s ease;
   }
 
-  [fade-in="true"] & > * {
+  [fade-in="true"] &>* {
     animation: fadeIn ease 0.5s;
     opacity: 0;
     animation-fill-mode: forwards;
+
     @for $i from 1 through 50 {
       &:nth-child(#{$i}) {
         animation-delay: #{math.log($i, 10) / 5}s;
@@ -46,7 +48,7 @@ span[data-time] {
   white-space: nowrap;
 
   &.highlight {
-    background: var(--secondary) !important;  
+    background: var(--secondary) !important;
     transition: background 0.3s ease;
   }
 
@@ -82,8 +84,76 @@ span[data-time] {
   opacity: 0.1;
   cursor: pointer;
   transition: opacity 0.3s ease;
+
   &:hover {
-  opacity: 0.8;
+    opacity: 0.8;
   }
 }
 
+ul[data-type="taskList"] {
+  list-style: none;
+  margin-left: 0;
+  padding: 0;
+
+  li {
+    align-items: flex-start;
+    display: flex;
+
+    >label {
+      flex: 0 0 auto;
+      margin-right: 0.5rem;
+      user-select: none;
+      position: relative;
+
+      &>span {
+        padding: 2px;
+        border: 1px solid var(--outlinegray);
+        cursor: pointer;
+        height: 18px;
+        width: 18px;
+        left: 0;
+        top: 3px;
+        position: absolute;
+        border-radius: 5px;
+
+        &:after {
+          content: "";
+          margin: 2px;
+          top: 0;
+          left: 0;
+          position: absolute;
+          height: 12px;
+          width: 12px;
+          opacity: 0;
+          border-radius: 3px;
+          background-color: var(--secondary);
+        }
+      }
+    }
+
+    &[data-checked="true"] {
+      text-decoration: line-through;
+      text-decoration-color: var(--gray);
+      color: var(--gray);
+
+      >label>span {
+        &:after {
+          opacity: 1;
+        }
+      }
+    }
+
+    >div {
+      flex: 1 1 auto;
+    }
+  }
+
+  input[type="checkbox"] {
+    cursor: pointer;
+    visibility: hidden;
+  }
+
+  ul[data-type="taskList"] {
+    margin: 0;
+  }
+}
